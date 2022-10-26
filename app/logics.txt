@@ -1,0 +1,108 @@
+@app.post("/posts", status_code=status.HTTP_201_CREATED)
+def create_post(post: Post):
+    # cursor.execute(f"INSERT INTO post ( title, content,published) VALUES ({post.title}, {post.content},{post.published})")
+    # we don't use the above method as it will make us vulnerable to an sql injection
+    # we passed our data using sql libraries such as here we used postgres lib wen we do %s method and pass it as second  feild in the statement
+    # the values are passed into the placeholders we implemented order matters here
+    
+    
+    
+    cursor.execute("""INSERT INTO posts (title,content,published) VALUES (%s,%s,%s) 
+    RETURNING *""",
+                   (post.title, post.content, post.published))
+    new_post = cursor.fetchone()
+    conn.commit()
+    return {"data": new_post}
+    # cursor.execute("""SELECT * FROM posts""")
+    # posts = cursor.fetchall()
+    # return {"data": posts}
+# without making a full frontend sending data used to test api postman is used
+# this tool allows us to construct our own http requests
+# specify feilds of requests to http method, url ,body autorisation methods
+# post creates a new http request  sending data to server such as content upload
+# post says "This is your post" and then it sends it to server
+
+
+
+
+update post
+ # cursor.execute(""" UPDATE posts SET title = %s,content = %s, published = %s WHERE id = %s RETURNING *""",
+    #                (post.title, post.content, post.published, str(id)))
+    # updated_post = cursor.fetchone()
+    # conn.commit()
+
+
+
+      # cursor.execute("""SELECT * FROM posts""")
+    # posts = cursor.fetchall()
+    # return {"data": posts}
+# without making a full frontend sending data used to test api postman is used
+# this tool allows us to construct our own http requests
+# specify feilds of requests to http method, url ,body autorisation methods
+# post creates a new http request  sending data to server such as content upload
+# post says "This is your post" and then it sends it to server
+
+
+ # cursor.execute(f"INSERT INTO post ( title, content,published) VALUES ({post.title}, {post.content},{post.published})")
+    # we don't use the above method as it will make us vulnerable to an sql injection
+    # we passed our data using sql libraries such as here we used postgres lib wen we do %s method and pass it as second  feild in the statement
+    # the values are passed into the placeholders we implemented order matters here
+    # cursor.execute("""INSERT INTO posts (title,content,published) VALUES (%s,%s,%s)
+    # RETURNING *""",
+    #                (post.title, post.content, post.published))
+    # new_post = cursor.fetchone()
+    # conn.commit()
+    # return {"data": new_post}
+
+
+    # title str, content str
+
+# id is a path parameter extract id
+
+
+# the decorator is responsible for creating the default settings for the application  and setting  the default
+# @app turns it into a path operation and pass an http method ie GET request
+# request  Get method url:/ order method when paths are same
+
+
+
+ # cursor.execute(
+    #     """ DELETE FROM posts WHERE id = %s RETURNING *""", (str(id),))
+    # delete_post = cursor.fetchone()
+    # conn.commit()
+
+
+    while True:
+    try:
+        conn = psycopg2.connect(host='localhost', database='fastapi',
+                                user='postgres', password='postgres', cursor_factory=RealDictCursor)
+        cursor = conn.cursor()
+    # used to execute sql statements
+        print("database conection was sucessfully created")
+    # if successfully able to connect we print above statement
+        break
+    except Exception as error:
+        print("database conection was failed")
+        print("error :", error)
+        time.sleep(5)
+
+
+my_posts = [{"title": "title of post 1", "content": "content of post 1", "id": 1}, {
+    "title": "title of post 2", "content": "content of post 2", "id": 2}]
+
+
+@app.get("/")
+async def root():
+    return {"messages": "This is a route/path-operation consisting of function and decorator"}
+
+
+def find_post(id):
+    for p in my_posts:
+        if (p["id"] == id):
+            return p
+
+
+def find_index_post(id):
+    for i, p in enumerate(my_posts):
+        if p["id"] == id:
+            return i
