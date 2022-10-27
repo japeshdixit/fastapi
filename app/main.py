@@ -28,9 +28,6 @@ app.include_router(Likes.router)
 
 
 
-
-
-
-
-
-    
+@app.get("/")
+def root():
+    return{"message": "successful run"}
