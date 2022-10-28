@@ -27,7 +27,6 @@ app.include_router(auth.router)
 app.include_router(Likes.router)
 
 
-
 @app.get("/")
 def root():
-    return{"message": "successful run!!"}
+    return{"message": "Refer to the docs to know more about the api"}
